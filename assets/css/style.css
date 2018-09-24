@@ -1,0 +1,61 @@
+
+
+.textright {
+    position: absolute;
+
+    left: 90%;
+}
+
+.inlinecard {
+    display: inline-block;
+}
+
+#weatherspan1 {
+    display: inline-block;
+}
+#weatherspan2 {
+    display: inline-block;
+}
+.inline {
+    display: inline-block;
+}
+
+#randomizer {
+    position: relative;
+    left: 10%;
+}
+.userbutton {
+    display: inline-block
+}
+#option-acttype{
+    position:relative;
+    bottom: 90px;
+    left: 120px;
+
+}
+
+#option-people{
+    position:relative;
+    bottom: 30px;
+    left: 70px;
+
+}
+#option-price{
+    position: relative;
+    left: 70px;
+}
+
+#option-difficulty{
+    position: relative;
+    bottom: 10px;
+    left: 70px;
+}
+#option-div{
+    background-color: red;
+    height: 100px;
+    width: 100px;
+    position: relative;
+    left: 50px;
+    z-index: 1;
+    display: inline-block;
+}
