@@ -95,6 +95,67 @@ function selectmaker(x, y, z){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $(document).ready(function () {
+    $("#displayUser").text(localStorage.email);
+
+    $("#submit").on("click", function (event) {
+        event.preventDefault();
+        var message = $("#textbox").val().trim();
+
+        var currentMoment = moment();
+        var timeStamp = moment(currentMoment).format("hh:mm");
+        var dateToday = moment(currentMoment).format("MM/DD/YY");
+
+
+        var chatUpload = {
+            comment: message,
+            time: timeStamp,
+            user: username,
+            date: dateToday
+        };
+
+        chatref.push(chatUpload);
+        console.log(chatUpload.comment);
+        console.log("time: " + chatUpload.time);
+        console.log("date:" + chatUpload.date);
+
+        $("#textbox").val("");
+
+    });
+
+    chatref.on("child_added", function (childSnapshot) {
+        console.log(childSnapshot.val());
+        var commentGrab = childSnapshot.val().comment;
+        var timeGrab = childSnapshot.val().time;
+        var userGrab = childSnapshot.val().user;
+        var dateGrab = childSnapshot.val().date;
+        console.log(commentGrab);
+
+
+
+        $("#messages").prepend("<b>" + userGrab + "</b>" + ": " + "<i> " + timeGrab + "     " + dateGrab + " </i>" + "<br>" + commentGrab + "<br>");
+    })
+
+
+    $("#loginbtn").on("click", function (event) {
+        event.preventDefault();
+        var email = $("#exampleInputEmail1").val();
+        var password = $("#password").val();
+
+        if (email === "ryan@gmail.com" && password === "ryan" || email === "eric@gmail.com" && password === "eric" || email === "sean@gmail.com" && password === "sean" || email === "khalid@gmail.com" && password === "khalid") {
+            localStorage.setItem("email", email);
+            $("#displayUser").text(localStorage.email);
+            $("#exampleInputEmail1").val("");
+            $("#password").val("");
+        } else {
+            $("#exampleInputEmail1").val("");
+            $("#password").val("");
+            alert("wrong username");
+        }
+
+
+
+
+    })
 
     //Sets up the expandable menu for the randomizer
     $(typemenu).attr('id', 'typemenu');
@@ -352,4 +413,15 @@ eventRef.on("child_added", function (snapshot) {
     caleandar(element, events, settings);
 
 })
+
+var currentTime = moment();
+var time = moment(currentTime).format("hh:mm");
+var date = moment().format("MM/DD/YY");
+var username = localStorage.email;
+
+var chatref = database.ref("/chatdata");
+
+
+
+
 
