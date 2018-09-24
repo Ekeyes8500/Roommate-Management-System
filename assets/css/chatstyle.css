@@ -1,0 +1,12 @@
+#chatbox {
+    width: 300px;
+    height: 400px;
+    background: white;
+}
+
+#messages {
+    text-align: left;
+    overflow: auto;
+    width: 300px;
+    height: 275px;
+}
