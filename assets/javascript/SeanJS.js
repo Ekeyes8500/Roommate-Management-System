@@ -1,19 +1,26 @@
 $(document).ready(function() {
 
-	// 1. Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyBTm_t7rFmL3bR5niUCGmJMzSuygJ-3xX4",
-        authDomain: "test-project-1618a.firebaseapp.com",
-        databaseURL: "https://test-project-1618a.firebaseio.com",
-        projectId: "test-project-1618a",
-        storageBucket: "test-project-1618a.appspot.com",
-        messagingSenderId: "807092599447"
-      };
-      firebase.initializeApp(config);
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyBOxWehNLh4ebOfHGu93OkBhbgQs3cNBeo",
+    authDomain: "project1database-eda98.firebaseapp.com",
+    databaseURL: "https://project1database-eda98.firebaseio.com",
+    projectId: "project1database-eda98",
+    storageBucket: "project1database-eda98.appspot.com",
+    messagingSenderId: "706535478057"
+};
+firebase.initializeApp(config);
 
 
   var database = firebase.database();
+  var billref = database.ref("/billref")
+  var userref = database.ref("/userData")
+  var noUsers = 0;
 
+
+  userref.on("child_added", function(snapshot) {
+      noUsers = noUsers + 1;
+  })
 
   $("#add-bill-btn").on("click", function(event) {
   		event.preventDefault();
@@ -35,7 +42,7 @@ $(document).ready(function() {
         start2: yeardate,
         paid:  ispaid,
 	  };
-  		database.ref().push(newbill);
+  		billref.push(newbill);
 
 	
 	  $("#bill-name-input").val("");
@@ -46,7 +53,7 @@ $(document).ready(function() {
   	});
 
   
-	database.ref().on("child_added", function(childSnapshot) {
+	billref.on("child_added", function(childSnapshot) {
 
 	  console.log(childSnapshot.val());
 
@@ -58,7 +65,7 @@ $(document).ready(function() {
       
       $('tbody').append("<tr><td>" + billName 
         + "</td><td>" + "$" + cost +"</td><td>" + monthdate + "/"+ daydate + "/" + yeardate
-        +"</td><td>$" + parseInt(cost)/4 +
+        +"</td><td>$" + parseInt(cost)/noUsers +
        "</td><td><button class='btn btn-outline-danger paid'>Paid</button></td></tr>");
     
 
