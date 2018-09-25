@@ -100,25 +100,27 @@ $(document).ready(function () {
     $("#submit").on("click", function (event) {
         event.preventDefault();
         var message = $("#textbox").val().trim();
+        if (message !== ""){
+            var currentMoment = moment();
+            var timeStamp = moment(currentMoment).format("hh:mm");
+            var dateToday = moment(currentMoment).format("MM/DD/YY");
+    
+    
+            var chatUpload = {
+                comment: message,
+                time: timeStamp,
+                user: username,
+                date: dateToday
+            };
+    
+            chatref.push(chatUpload);
+            console.log(chatUpload.comment);
+            console.log("time: " + chatUpload.time);
+            console.log("date:" + chatUpload.date);
+    
+            $("#textbox").val("");
 
-        var currentMoment = moment();
-        var timeStamp = moment(currentMoment).format("hh:mm");
-        var dateToday = moment(currentMoment).format("MM/DD/YY");
-
-
-        var chatUpload = {
-            comment: message,
-            time: timeStamp,
-            user: username,
-            date: dateToday
-        };
-
-        chatref.push(chatUpload);
-        console.log(chatUpload.comment);
-        console.log("time: " + chatUpload.time);
-        console.log("date:" + chatUpload.date);
-
-        $("#textbox").val("");
+        }
 
     });
 
