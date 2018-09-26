@@ -15,9 +15,7 @@ firebase.initializeApp(config);
 
 //firebase reference variables first
 var database = firebase.database();
-
 var userRef = database.ref("/userData");
-
 var eventRef = database.ref("/eventdata");
 
 //event array that contains event objects for calendar script
@@ -36,6 +34,8 @@ var holidayName;
 var holidayLink;
 var holidayDate;
 
+var dayselect = $("<select>")
+var monthselect = $("<select>")
 var typemenu = $("<select>");
 var accessmenu = $("<select>");
 var pricemenu = $("<select>");
@@ -49,6 +49,14 @@ var activities = ["-Type of Activities-", "Education", "Busywork", "Relaxation",
 var accessibility = [];
 var people = [];
 
+//chat variables--------------------------------------------------------------------------------------------------
+var currentTime = moment();
+var time = moment(currentTime).format("hh:mm");
+var date = moment().format("MM/DD/YY");
+var username = localStorage.email;
+
+var chatref = database.ref("/chatdata");
+//-------------------------------------------------------------------------------------------------------------------------
 
 //Functions
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,8 +71,7 @@ function numberedlistmaker(x, y, z){
         }else{
             y.push(i);
         }
-    }
-    
+    }  
 }
 
 //creates a select menu based on 3 arguments, x = array given, y = how many options(including first header one), 
@@ -83,19 +90,17 @@ function selectmaker(x, y, z){
         newselect = newselect + ">"
         newselect = newselect + x[i];
         newselect = newselect + "</option>"
-
     }
     newselect = newselect + "</select>"
     $(z).html(newselect);
-    
-
 }
 
 //Script
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $(document).ready(function () {
-    $("#displayUser").text(localStorage.email);
+
+    //Ryan's chat code, separated  for clarity) -----------------------------------------------------------------------------
 
     $("#submit").on("click", function (event) {
         event.preventDefault();
@@ -119,9 +124,7 @@ $(document).ready(function () {
             console.log("date:" + chatUpload.date);
     
             $("#textbox").val("");
-
         }
-
     });
 
     chatref.on("child_added", function (childSnapshot) {
@@ -131,9 +134,6 @@ $(document).ready(function () {
         var userGrab = childSnapshot.val().user;
         var dateGrab = childSnapshot.val().date;
         console.log(commentGrab);
-
-
-
         $("#messages").prepend("<b>" + userGrab + "</b>" + ": " + "<i> " + timeGrab + "     " + dateGrab + " </i>" + "<br>" + commentGrab + "<br>");
     })
 
@@ -158,6 +158,7 @@ $(document).ready(function () {
 
 
     })
+    //(end chat code)--------------------------------------------------------------------------------------------------------------------
 
     //Sets up the expandable menu for the randomizer
     $(typemenu).attr('id', 'typemenu');
@@ -199,7 +200,7 @@ $(document).ready(function () {
     })
 
 
-    //URL for weather API
+    //URL for weather API currently rigged for philadelphia, would be based on location if we had money to spend on APIs... we don't
     var weatherqueryURL = "https://api.weatherbit.io/v2.0/current?key=847f4ebbc36b477c8901fab6bc2b59fa&units=i&city=philadelphia";
 
     $.ajax({
@@ -209,9 +210,6 @@ $(document).ready(function () {
         var temp = response.data[0].temp
         $("#weatherspan2").text(temp)
         })
-
-
-
 
     $("#yearinput").val("2018");
     var element = document.querySelector('#calendar');
@@ -253,6 +251,7 @@ $(document).on("click","#generate", function(event){
     var pricechoice = $(pricemenu).val();
     var peoplechoice = $(peoplemenu).val();
 
+    //specific checker for DIY because it doesnt fall neatly into the search string like the others
     if (typechoice !== "" ){
         if (typechoice === 'd.i.y.'){
             eventquery = eventqueryURL + "&type=diy"
@@ -301,11 +300,7 @@ $(document).on("click","#generate", function(event){
             var eventresponse = response.activity;
             $("#eventinput").val(eventresponse);
         }
-
-
     });
-
-
 })
 
 //this function takes and stores an event when a user inputs it
@@ -358,21 +353,15 @@ $(document).on("click", "#addbutton", function (event) {
     $("#userinput").val("")
     $("#emailinput").val("")
     $("#passwordinput").val("")
-
-})
+});
 
 
 $(document).on("click", ".userbutton", function () {
     users = []
-
     userTotal = userTotal - 1;
     var cancelkey = ($(this).attr("data-key"));
-
-
     $(this).remove()
-
     userRef.child(cancelkey).remove()
-
 })
 
 userRef.on("child_added", function (snapshot) {
@@ -415,15 +404,6 @@ eventRef.on("child_added", function (snapshot) {
     caleandar(element, events, settings);
 
 })
-
-var currentTime = moment();
-var time = moment(currentTime).format("hh:mm");
-var date = moment().format("MM/DD/YY");
-var username = localStorage.email;
-
-var chatref = database.ref("/chatdata");
-
-
 
 
 
