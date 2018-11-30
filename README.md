@@ -1,6 +1,6 @@
 # project1 - Roommate Management System(RMS)
 
-#Project Credits:
+# Project Credits:
 
 Eric Keyes - calender rigging, user add/remove, weather API, event adder(firebase), holiday API sync to calender, bored API(random event generator), bugfixes
 
@@ -13,21 +13,21 @@ Sean Kelley - Bill storage(firebase), bugfixes, paynow demo rigging, bill adder
 These only list the parts of the project that each member worked on MAINLY, this project was extremely collaborative, and
 all members helped with all parts of the project.
 
-#Project Licenses:
+# Project Licenses:
 This project uses the lightweight, open-source Cale-ander from github to display the actual calendar. Caleander licsense
 provided in the license directory. The application itself is not modified, however it took a decent amount of work in the script.js file to make it work for our purposes.
 
-#APIs used:
+# APIs used:
 Bored API - https://www.boredapi.com/
 Weatherbit API - https://www.weatherbit.io/api
 Holiday API - https://holidayapi.com/
 
 
-#Introduction:
+# Introduction:
 Our team's initial plan for project 1 was to create a modular web app, with each team members focusing on creating a specific module at first, to allow us to create a huge project without a lot of maneuvering between team members. The idea of a roommate management system came first, as it had a lot of opportunity for us to build things geared for, and was a useful and realistic goal.
 
 
-#Features:
+# Features:
 
 -Event calender with syncing holidays (Only past, not paying that $10 a month API money for current holidays)
 
